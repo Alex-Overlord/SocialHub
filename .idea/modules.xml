@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SocialHub.iml" filepath="$PROJECT_DIR$/.idea/SocialHub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SocialHub.iml" filepath="$PROJECT_DIR$/.idea/modules/SocialHub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SocialHub.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SocialHub.app.iml" />
     </modules>
   </component>
 </project>

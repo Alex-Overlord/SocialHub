@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SocialHub</string>
+    <string name="banner">SocialHub</string>
+    <string name="bannerDescription">Connect with the world</string>
+</resources>
