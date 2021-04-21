@@ -2,4 +2,12 @@
     <string name="app_name">SocialHub</string>
     <string name="banner">SocialHub</string>
     <string name="bannerDescription">Connect with the world</string>
+    <string name="bannner">logo_banner</string>
+    <string name="email_address_title">Email Address :</string>
+    <string name="full_name_title">Full Name :</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="user_title">User</string>
+    <string name="logout">Logout</string>
+    <string name="networks_title">Networks</string>
+    <string name="action_logout">Logout</string>
 </resources>

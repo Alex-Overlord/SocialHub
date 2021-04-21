@@ -3,11 +3,13 @@ package com.pixelperfect.socialhub;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -15,11 +17,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ForgotPassword extends AppCompatActivity {
+public class ForgotPassword extends AppCompatActivity implements View.OnClickListener {
 
     private EditText emailEditText;
     private Button resetPasswordButton;
     private ProgressBar progressBar;
+    private ImageView banner;
 
     FirebaseAuth auth;
 
@@ -31,6 +34,9 @@ public class ForgotPassword extends AppCompatActivity {
         emailEditText = findViewById(R.id.email);
         resetPasswordButton = findViewById(R.id.resetPassword);
         progressBar = findViewById(R.id.progressBar);
+
+        banner = findViewById(R.id.banner);
+        banner.setOnClickListener(this);
 
         auth = FirebaseAuth.getInstance();
 
@@ -64,5 +70,14 @@ public class ForgotPassword extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.banner:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+        }
     }
 }
