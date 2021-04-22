@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         progressBar.setVisibility(View.VISIBLE);
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             // redirect to user profile
                             startActivity(new Intent(MainActivity.this
-                                    , ProfileActivity.class));
+                                    , NetworksActivity.class));
                         } else {
                             user.sendEmailVerification();
                             Toast.makeText(MainActivity.this
@@ -120,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 , Toast.LENGTH_LONG).show();
                     }
                 });
+        progressBar.setVisibility(View.GONE);
     }
 
 }

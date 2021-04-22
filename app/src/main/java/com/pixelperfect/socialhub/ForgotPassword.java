@@ -70,6 +70,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

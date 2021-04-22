@@ -107,17 +107,15 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                 .setValue(user).addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
                                 Toast.makeText(RegisterUser.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
-
-                                // redirect to login layout!
+                                startActivity(new Intent(this, MainActivity.class));
                             } else {
                                 Toast.makeText(RegisterUser.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
                             }
-                            progressBar.setVisibility(View.GONE);
                         });
                     } else {
                         Toast.makeText(RegisterUser.this, "Failed to register!", Toast.LENGTH_LONG).show();
-                        progressBar.setVisibility(View.GONE);
                     }
                 });
+        progressBar.setVisibility(View.GONE);
     }
 }

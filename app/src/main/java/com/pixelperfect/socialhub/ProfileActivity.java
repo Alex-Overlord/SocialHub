@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,9 +39,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         logout = findViewById(R.id.signOut);
         logout.setOnClickListener(this);
@@ -95,6 +97,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         if (id == R.id.action_user) {
             startActivity(new Intent(this, ProfileActivity.class));
+        }
+
+        if (id == R.id.action_networks) {
+            startActivity(new Intent(this, NetworksActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
