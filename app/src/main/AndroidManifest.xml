@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialHub">
+        <activity android:name=".CreateNetworkActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,13 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterUser"
+        <activity
+            android:name=".RegisterUser"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ForgotPassword"
+        <activity
+            android:name=".ForgotPassword"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:parentActivityName=".NetworksActivity" />
-        <activity android:name=".NetworksActivity"
+        <activity
+            android:name=".NetworksActivity"
             android:parentActivityName=".MainActivity" />
     </application>
 

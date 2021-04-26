@@ -59,8 +59,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 User userProfile = snapshot.getValue(User.class);
 
                 if (userProfile != null) {
-                    String fullName = userProfile.fullName;
-                    String email = userProfile.email;
+                    String fullName = userProfile.getFullName();
+                    String email = userProfile.getEmail();
 
                     greetingTextView.setText("Welcome, " + fullName + " !");
                     fullNameTextView.setText(fullName);
