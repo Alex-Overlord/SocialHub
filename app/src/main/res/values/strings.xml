@@ -11,4 +11,5 @@
     <string name="networks_title">Networks</string>
     <string name="action_logout">Logout</string>
     <string name="CreateNetworkText">Create Network</string>
+    <string name="networkAdviceText">Enter a name and description that describes the topic of the network (its geographic area, topic, center of interest, etc.)</string>
 </resources>

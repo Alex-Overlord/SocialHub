@@ -10,32 +10,20 @@
         android:id="@+id/tool_bar"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/networksListTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Networks List"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/networksList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addNetwork"
+        app:layout_constraintBottom_toTopOf="@+id/createNetwork"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/networksListTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
 
     <Button
         android:id="@+id/createNetwork"
         android:layout_width="380dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@color/primary"
         android:text="@string/CreateNetworkText"
         android:textColor="@color/white"

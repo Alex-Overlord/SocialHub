@@ -1,4 +1,4 @@
-package com.pixelperfect.socialhub;
+package com.pixelperfect.socialhub.models;
 
 public class User {
 

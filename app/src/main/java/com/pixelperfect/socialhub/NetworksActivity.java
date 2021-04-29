@@ -12,6 +12,8 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class NetworksActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
@@ -24,7 +26,8 @@ public class NetworksActivity extends AppCompatActivity implements View.OnClickL
 
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle("Networks List");
 
         createNetwork = findViewById(R.id.createNetwork);
         createNetwork.setOnClickListener(this);
