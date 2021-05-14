@@ -5,21 +5,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.StorageReference;
+import com.pixelperfect.socialhub.models.Network;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -72,6 +69,7 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()) {
             case R.id.validateNetwork:
                 createNetwork();
+                startActivity(new Intent(this, NetworkActivity.class));
                 break;
         }
     }
@@ -101,7 +99,7 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         }
 
         if (id == R.id.action_networks) {
-            startActivity(new Intent(this, NetworksActivity.class));
+            startActivity(new Intent(this, NetworksListActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -109,7 +107,7 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(CreateNetworkActivity.this, MainActivity.class));
+        startActivity(new Intent(CreateNetworkActivity.this, LoginActivity.class));
     }
 
     public void createNetwork() {

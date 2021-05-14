@@ -1,13 +1,10 @@
 package com.pixelperfect.socialhub;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +15,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register, forgotPassword;
     private EditText editTextEmail, editTextPassword;
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         register = findViewById(R.id.register);
         register.setOnClickListener(this);
@@ -57,13 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register:
-                startActivity(new Intent(this, RegisterUser.class));
+                startActivity(new Intent(this, RegisterUserActivity.class));
                 break;
             case R.id.signIn:
                 userLogin();
                 break;
             case R.id.forgotPassword:
-                startActivity(new Intent(this, ForgotPassword.class));
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 break;
         }
     }
@@ -105,16 +102,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (user.isEmailVerified()) {
 
                             // redirect to user profile
-                            startActivity(new Intent(MainActivity.this
-                                    , NetworksActivity.class));
+                            startActivity(new Intent(LoginActivity.this
+                                    , NetworksListActivity.class));
                         } else {
                             user.sendEmailVerification();
-                            Toast.makeText(MainActivity.this
+                            Toast.makeText(LoginActivity.this
                                     , "Check your email to verify your account!"
                                     , Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(MainActivity.this
+                        Toast.makeText(LoginActivity.this
                                 , "Failed to login! Please check your credentials"
                                 , Toast.LENGTH_LONG).show();
                     }

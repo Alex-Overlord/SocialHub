@@ -104,7 +104,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if (id == R.id.action_networks) {
-            startActivity(new Intent(this, NetworksActivity.class));
+            startActivity(new Intent(this, NetworksListActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -121,6 +121,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
     }
 }

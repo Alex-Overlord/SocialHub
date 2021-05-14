@@ -1,14 +1,17 @@
 package com.pixelperfect.socialhub.models;
 
+import java.util.UUID;
+
 public class User {
 
-    private String fullName, email;
+    private String id, fullName, email;
 
     // Constructors
     public User() {}
-    public User(String fullName, String email) {
+    public User(String id, String fullName, String email) {
         this.fullName = fullName;
         this.email = email;
+        this.id = id;
     }
 
     // Getters and Setters
@@ -23,5 +26,11 @@ public class User {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 }

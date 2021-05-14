@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
-public class NetworksActivity extends AppCompatActivity implements View.OnClickListener {
+public class NetworksListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     private Button createNetwork;
@@ -22,7 +22,7 @@ public class NetworksActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_networks);
+        setContentView(R.layout.activity_networks_list);
 
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -68,7 +68,7 @@ public class NetworksActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (id == R.id.action_networks) {
-            startActivity(new Intent(this, NetworksActivity.class));
+            startActivity(new Intent(this, NetworksListActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -76,6 +76,6 @@ public class NetworksActivity extends AppCompatActivity implements View.OnClickL
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(NetworksActivity.this, MainActivity.class));
+        startActivity(new Intent(NetworksListActivity.this, LoginActivity.class));
     }
 }
