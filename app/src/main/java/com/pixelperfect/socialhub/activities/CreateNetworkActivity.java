@@ -1,4 +1,4 @@
-package com.pixelperfect.socialhub;
+package com.pixelperfect.socialhub.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,11 +16,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.pixelperfect.socialhub.R;
 import com.pixelperfect.socialhub.models.Network;
+import com.pixelperfect.socialhub.models.User;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Objects;
+import java.util.UUID;
 
 public class CreateNetworkActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,7 +31,7 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
     private ProgressBar progressBar;
 
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference referenceUsers, referenceNetworks;
     private String userID;
 
     private String saveCurrentDate, saveCurrentTime, randomName;
@@ -54,7 +55,8 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         validateNetwork.setOnClickListener(this);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
+        referenceNetworks = FirebaseDatabase.getInstance().getReference("Networks");
         userID = user.getUid();
 
         // à enlever pour le rendu !!
@@ -69,7 +71,7 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()) {
             case R.id.validateNetwork:
                 createNetwork();
-                startActivity(new Intent(this, NetworkActivity.class));
+                startActivity(new Intent(this, NetworksListActivity.class));
                 break;
         }
     }
@@ -128,40 +130,48 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Calendar calDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
-        saveCurrentDate = currentDate.format(calDate.getTime());
+        Network networkModel = new Network(UUID.randomUUID().toString(), name, description);
+        User insertedUser = new User(userID, user.getDisplayName(), user.getEmail());
 
-        Calendar calTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-        saveCurrentTime = currentTime.format(calTime.getTime());
+        networkModel.addUser(insertedUser);
+        referenceNetworks.push().setValue(networkModel);
 
-        randomName = saveCurrentDate + saveCurrentTime;
+        /*
 
+        mGetReference.addValueEventListener (new ValueEventListener () {
+          @Override public void onDataChange (@NonNull DataSnapshot dataSnapshot) {
+              if (dataSnapshot.exists ()) {
+                  HashMap <String, Object> data );
+                  pour (clé de chaîne: dataMap.keySet ()) {
+                      objet Data = dataMap.get (clé);
+                      try {
+                          HashMap <String, Object> userData = (HashMap <String, Object>) data;
+                          utilisateur mUser = nouvel utilisateur ( (Chaîne) userData.get ("nom"), (int) (long) userData.get ("âge"));
+                          addTextToView (mUser.getName () + "-" + Integer.toString (mUser.getAge ()) );
+                       } catch (ClassCastException cce) {
+                          // Si l'objet ne peut pas être transtypé en HashMap, cela signifie qu'il est de type String.
+                          try {String mString = String.valueOf (dataMap.get (clé));
+                          addTextToView ( mString);
+                       } catch (ClassCastException cce2) {}
+                    }
+                 }
+              }
+           }
+           @Override public void onCancelled (@NonNull DatabaseError databaseError) {}
+        });
 
-//        mAuth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+         */
+
+//        Calendar calDate = Calendar.getInstance();
+//        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+//        saveCurrentDate = currentDate.format(calDate.getTime());
 //
-//                        if (user.isEmailVerified()) {
+//        Calendar calTime = Calendar.getInstance();
+//        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+//        saveCurrentTime = currentTime.format(calTime.getTime());
 //
-//                            // redirect to user profile
-//                            startActivity(new Intent(MainActivity.this
-//                                    , NetworksActivity.class));
-//                        } else {
-//                            user.sendEmailVerification();
-//                            Toast.makeText(MainActivity.this
-//                                    , "Check your email to verify your account!"
-//                                    , Toast.LENGTH_LONG).show();
-//                        }
-//                    } else {
-//                        Toast.makeText(MainActivity.this
-//                                , "Failed to login! Please check your credentials"
-//                                , Toast.LENGTH_LONG).show();
-//                    }
-//                });
+//        randomName = saveCurrentDate + saveCurrentTime;
+
         progressBar.setVisibility(View.GONE);
     }
-
 }

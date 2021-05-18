@@ -1,4 +1,4 @@
-package com.pixelperfect.socialhub;
+package com.pixelperfect.socialhub.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
+import com.pixelperfect.socialhub.R;
 import com.pixelperfect.socialhub.models.User;
 
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
@@ -94,15 +97,34 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         }
 
         progressBar.setVisibility(View.VISIBLE);
+
+//        mAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+//                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest
+//                                .Builder()
+//                                .setDisplayName(fullName).build();
+//                        firebaseUser.updateProfile(profileChangeRequest);
+//                    }
+//                });
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+
                         User user = new User(mAuth.getCurrentUser().getUid(), fullName, email);
 
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .setValue(user).addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
+                                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest
+                                    .Builder()
+                                    .setDisplayName(fullName).build();
+                                firebaseUser.updateProfile(profileChangeRequest);
+
                                 Toast.makeText(RegisterUserActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(this, LoginActivity.class));
                             } else {

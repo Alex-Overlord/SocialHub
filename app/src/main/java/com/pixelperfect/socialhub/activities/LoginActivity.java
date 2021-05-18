@@ -1,4 +1,4 @@
-package com.pixelperfect.socialhub;
+package com.pixelperfect.socialhub.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.pixelperfect.socialhub.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

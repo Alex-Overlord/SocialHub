@@ -1,4 +1,4 @@
-package com.pixelperfect.socialhub;
+package com.pixelperfect.socialhub.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pixelperfect.socialhub.R;
 import com.pixelperfect.socialhub.models.User;
 
 import java.util.Objects;
@@ -60,11 +61,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User userProfile = snapshot.getValue(User.class);
+                User userModelProfile = snapshot.getValue(User.class);
 
-                if (userProfile != null) {
-                    String fullName = userProfile.getFullName();
-                    String email = userProfile.getEmail();
+                if (userModelProfile != null) {
+                    String fullName = userModelProfile.getFullName();
+                    String email = userModelProfile.getEmail();
 
                     greetingTextView.setText("Welcome, " + fullName + " !");
                     fullNameTextView.setText(fullName);

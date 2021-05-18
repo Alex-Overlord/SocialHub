@@ -18,10 +18,10 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context mContext;
-    private List<User> mUsers;
+    private List<User> mUser;
 
-    public UserAdapter(Context mContext, List<User> mUsers) {
-        this.mUsers = mUsers;
+    public UserAdapter(Context mContext, List<User> mUserModels) {
+        this.mUser = mUserModels;
         this.mContext = mContext;
     }
 
@@ -35,14 +35,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull UserAdapter.ViewHolder holder, int position) {
-        User user = mUsers.get(position);
+        User user = mUser.get(position);
         holder.username.setText(user.getFullName());
 
     }
 
     @Override
     public int getItemCount() {
-        return mUsers.size();
+        return mUser.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView username;

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NetworksListActivity">
+    tools:context=".activities.NetworksListActivity">
 
     <include
         android:id="@+id/tool_bar"
         layout="@layout/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/networksList"
+        android:id="@+id/networksList_recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/createNetwork"
