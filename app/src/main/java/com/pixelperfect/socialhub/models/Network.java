@@ -1,12 +1,14 @@
 package com.pixelperfect.socialhub.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Network {
 
     private String id, name, description;
-    private ArrayList<User> users;
-
+    private Map<String, User> users;
+    private Map<String, User> admins;
 
     // Constructors
     public Network() {}
@@ -14,11 +16,11 @@ public class Network {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.users = new ArrayList<>();
+        this.users = new HashMap<>();
+        this.admins = new HashMap<>();
     }
 
     // Getters and Setters
-
     public String getId() {
         return id;
     }
@@ -37,14 +39,27 @@ public class Network {
     public void setDescription(String description) {
         this.description = description;
     }
-    public ArrayList<User> getUsers() {
+    public Map<String,User> getUsers() {
         return users;
     }
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(Map<String,User> users) {
         this.users = users;
     }
+    public Map<String,User> getAdmins() {
+        return admins;
+    }
+    public void setAdmins(Map<String,User> admins) {
+        this.admins = admins;
+    }
 
-    public void addUser(User user) {
-        users.add(user);
+    // Others methods
+    public void addUser(String key, User user) {
+        users.put(key, user);
+    }
+    public void addAdmin(String key, User user) {
+        admins.put(key, user);
+    }
+    public boolean estMembre(User user){
+        return this.users.containsKey(user.getId());
     }
 }

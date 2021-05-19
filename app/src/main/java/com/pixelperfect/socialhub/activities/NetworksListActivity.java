@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,11 +25,14 @@ import com.pixelperfect.socialhub.R;
 import com.pixelperfect.socialhub.RecyclerItemClickListener;
 import com.pixelperfect.socialhub.adapters.NetworkAdapter;
 import com.pixelperfect.socialhub.models.Network;
+import com.pixelperfect.socialhub.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static com.google.firebase.database.FirebaseDatabase.getInstance;
 
 public class NetworksListActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +43,7 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
     private ArrayList<Network> networks;
     private NetworkAdapter networkAdapter;
     private String selectedNetworkID;
+    private String keyNet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +69,58 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
                         Network item = networks.get(itemPosition);
 
 //                        Toast.makeText(NetworksListActivity.this, "onItemClick " + item.getId(), Toast.LENGTH_SHORT).show();
+                        DatabaseReference refNetworks = FirebaseDatabase.getInstance().getReference().child("Networks");
 
-                        startActivity(new Intent(NetworksListActivity.this, NetworkActivity.class)
-                                .putExtra("NETWORK_ID", item.getId()));
+                        refNetworks.orderByChild("id").equalTo(item.getId()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                                    keyNet = childSnapshot.getKey();
+                                    DatabaseReference refUsersNetwork = getInstance().getReference().child("Networks").child(keyNet).child("users");
+                                    //test s'il peut aller directement dans le reseau public
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                    assert user != null;
+                                    User insertedUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
+//                        item.addUser(user.getUid(), insertedUser);
+
+                                    String keyId = refNetworks.push().getKey();
+
+                                    assert keyId != null;
+                                    assert keyNet != null;
+                                    refUsersNetwork.child(user.getUid()).setValue(insertedUser);
+//                                    refUsersNetwork.setValue(insertedUser);
+
+                                    if (item.estMembre(insertedUser)) {
+                                        startActivity(new Intent(NetworksListActivity.this, NetworkActivity.class)
+                                                .putExtra("NETWORK_ID", item.getId()));
+                                    } else {
+                                        Toast.makeText(NetworksListActivity.this, "Tu dois etre inscrit pour y allée", Toast.LENGTH_LONG).show();
+
+                                    }
+//                                    network = childSnapshot.getValue(Network.class);
+//                                    getSupportActionBar().setTitle(network.getName());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                            }
+                        });
+
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
                         // do whatever
+                        Toast.makeText(NetworksListActivity.this,"selectionner le reseau ?", Toast.LENGTH_LONG).show();
                     }
                 })
         );
 
         networks = new ArrayList<>();
 
-        reference = FirebaseDatabase.getInstance().getReference().child("Networks");
+        reference = getInstance().getReference().child("Networks");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

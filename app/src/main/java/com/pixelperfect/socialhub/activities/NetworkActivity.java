@@ -11,12 +11,15 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,9 +45,9 @@ import java.util.UUID;
 public class NetworkActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
-    private String networkID;
-    private Network network;
-    private TextView textView;
+    public String networkID;
+    public String networkKey;
+    public Network network;
 
     FirebaseUser firebaseUser;
     DatabaseReference referenceUser;
@@ -66,7 +69,6 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
             networkID = (String) savedInstanceState.getSerializable("NETWORK_ID");
         }
 
-        textView = findViewById(R.id.fragment_chats_text);
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
@@ -80,7 +82,10 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
         referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
-                User userModel = snapshot.getValue(User.class);
+//                User user = snapshot.getValue(User.class);
+//                network.addUser(user);
+//                Toast.makeText(NetworkActivity.this, "addUser : "+user , Toast.LENGTH_LONG).show();
+
             }
 
             @Override
@@ -100,41 +105,14 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Networks");
-//        DatabaseReference ref = reference.getParent().child(networkID);
-
-
-//        Query query = reference.orderByChild("Networks").equalTo(networkID);
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        network = dataSnapshot.getValue(Network.class);
-//
-//                        Toast.makeText(NetworkActivity.this, network.getId().getClass().toString(), Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(NetworkActivity.this, networkID.getClass().toString(), Toast.LENGTH_SHORT).show();
-//
-//                        assert network != null;
-//                        if (network.getId().equals(networkID)) {
-//                            Objects.requireNonNull(getSupportActionBar()).setTitle(network.getName());
-//                        }
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
         referenceNetworks.orderByChild("id").equalTo(networkID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                    networkKey = childSnapshot.getKey();
                     network = childSnapshot.getValue(Network.class);
                     getSupportActionBar().setTitle(network.getName());
+//                    copyRecord(referenceUser, referenceNetworks.child(networkKey).child("users"));
 //                    Toast.makeText(NetworkActivity.this, "name : " + network.getName(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -144,76 +122,21 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-//        referenceNetworks.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Network network_tmp = dataSnapshot.getValue(Network.class);
-//                    network_tmp.setId(dataSnapshot.getKey());
-//
-////                    textView.setText("network_tmp.getId() : " + network_tmp.getId() + "\n networkID : " + networkID);
-//                    Toast.makeText(NetworkActivity.this,
-//                            "String.valueOf(network.getId()) : " + String.valueOf(network_tmp.getId())
-//                                    + "\nString.valueOf(networkID) : " + String.valueOf(networkID)
-//                                    + "\n" + String.valueOf(network_tmp.getId() == networkID),
-//                            Toast.LENGTH_SHORT).show();
-////                    getSupportActionBar().setTitle(networkID);
-////
-////                    if (dataSnapshot.getKey().equals(networkID)) {
-////                    if ((String) network_tmp.getId() == (String) networkID) {
-////
-////                    Toast.makeText(NetworkActivity.this, networkID, Toast.LENGTH_SHORT).show();
-////                    Toast.makeText(NetworkActivity.this, network_tmp.getId(), Toast.LENGTH_SHORT).show();
-////                    assert networkID != null;
-////                    assert network_tmp.getId() != null;
-////                    if (networkID.equals(network_tmp.getId())) {
-////
-////                        Toast.makeText(NetworkActivity.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-////                        network = snapshot.getValue(Network.class);
-////                        getSupportActionBar().setTitle(network.getName());
-////                        Toast.makeText(NetworkActivity.this, network.getName(), Toast.LENGTH_SHORT).show();
-////                    }
-//
-////                    Toast.makeText(NetworkActivity.this, snapshot.getKey(), Toast.LENGTH_SHORT).show();
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
-
-
-
-
-//        referenceNetworks.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Network network_tmp = dataSnapshot.getValue(Network.class);
-////                    Toast.makeText(NetworkActivity.this, networkID, Toast.LENGTH_SHORT).show();
-////                    Toast.makeText(NetworkActivity.this, network_tmp.getId(), Toast.LENGTH_SHORT).show();
-//                    network = snapshot.getValue(Network.class);
-//                    getSupportActionBar().setTitle(network.getName());
-//
-//                    assert networkID != null;
-//                    assert network_tmp.getId() != null;
-//                    if (networkID.equals(network_tmp.getId())) {
-//                        //                    Toast.makeText(NetworkActivity.this,"network_tmp.getId() : " + network_tmp.getId() + "\n networkID : " + networkID, Toast.LENGTH_SHORT).show();
-//                        network = snapshot.getValue(Network.class);
-//                        getSupportActionBar().setTitle(network.getName());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
     }
+
+//    private void copyRecord(DatabaseReference fromPath, final DatabaseReference toPath) {
+//        fromPath.addListenerForSingleValueEvent(new ValueEventListener()  {
+//            private static final String TAG = "TAG";
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                toPath.setValue(dataSnapshot.getValue().toString()).addOnCompleteListener(task -> Log.d(TAG, "Success!"));
+//                Toast.makeText(NetworkActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {}
+//        });
+//    }
 
     @Override
     public void onClick(View v) {
@@ -237,7 +160,6 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             logout();
             return true;

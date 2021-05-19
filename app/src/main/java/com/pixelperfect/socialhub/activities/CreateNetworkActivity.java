@@ -32,9 +32,8 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
 
     private FirebaseUser user;
     private DatabaseReference referenceUsers, referenceNetworks;
-    private String userID;
 
-    private String saveCurrentDate, saveCurrentTime, randomName;
+//    private String saveCurrentDate, saveCurrentTime, randomName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         user = FirebaseAuth.getInstance().getCurrentUser();
         referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
         referenceNetworks = FirebaseDatabase.getInstance().getReference("Networks");
-        userID = user.getUid();
 
         // à enlever pour le rendu !!
         editTextName.setText("Mon réseau");
@@ -130,14 +128,15 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Network networkModel = new Network(UUID.randomUUID().toString(), name, description);
-        User insertedUser = new User(userID, user.getDisplayName(), user.getEmail());
+        Network network = new Network(UUID.randomUUID().toString(), name, description);
+        User insertedUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
 
-        networkModel.addUser(insertedUser);
-        referenceNetworks.push().setValue(networkModel);
+        network.addUser(user.getUid(), insertedUser);
+        network.addAdmin(user.getUid(), insertedUser);
+        referenceNetworks.push().setValue(network);
+        network.setId(referenceNetworks.getKey());
 
         /*
-
         mGetReference.addValueEventListener (new ValueEventListener () {
           @Override public void onDataChange (@NonNull DataSnapshot dataSnapshot) {
               if (dataSnapshot.exists ()) {
