@@ -31,24 +31,22 @@ import com.pixelperfect.socialhub.models.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class UsersFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
     public NetworkActivity networkActivity;
-    private Network network;
-    private String networkKey;
-    public ArrayList<User> usersList;
+
+    RecyclerView recyclerView;
+    UserAdapter userAdapter;
+    Network network;
+    String networkKey;
+    public ArrayList usersList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_users, container, false);
 
-        recyclerView = view.findViewById(R.id.fragmert_users_recycler_view);
+        recyclerView = view.findViewById(R.id.users_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -66,7 +64,7 @@ public class UsersFragment extends Fragment {
                     public void onItemClick(View view, int position) {
                         //view.setBackgroundColor(Color.parseColor("FF0000"));
                         int itemPosition = recyclerView.getChildLayoutPosition(view);
-                        User item = usersList.get(itemPosition);
+                        User item = (User) usersList.get(itemPosition);
                         Toast.makeText(getContext(), String.valueOf(itemPosition), Toast.LENGTH_SHORT).show();
                     }
 
@@ -75,7 +73,7 @@ public class UsersFragment extends Fragment {
                         DatabaseReference referenceNetworks = FirebaseDatabase.getInstance().getReference("Networks");
                         DatabaseReference referenceUsersNetwork = referenceNetworks.child(networkKey).child("users");
                         int itemPosition = recyclerView.getChildLayoutPosition(view);
-                        User item = usersList.get(itemPosition);
+                        User item = (User) usersList.get(itemPosition);
                         String str = referenceUsersNetwork.child(item.getId().toString()).getKey();
                         referenceUsersNetwork.child(item.getId().toString()).removeValue();
                         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
@@ -104,6 +102,7 @@ public class UsersFragment extends Fragment {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
+                    assert user != null;
                     network.getUsers().put(user.getId(),user);
                 }
 

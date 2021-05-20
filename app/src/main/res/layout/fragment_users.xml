@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.UsersFragment">
+    tools:context=".fragments.UsersFragment"
+    android:background="@color/grey">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragmert_users_recycler_view"
+        android:id="@+id/users_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:background="@color/white"/>
 
 </RelativeLayout>

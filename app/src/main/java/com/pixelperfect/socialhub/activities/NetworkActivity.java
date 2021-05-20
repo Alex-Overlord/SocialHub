@@ -11,52 +11,58 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.pixelperfect.socialhub.R;
 import com.pixelperfect.socialhub.fragments.ChatsFragment;
 import com.pixelperfect.socialhub.fragments.UsersFragment;
+import com.pixelperfect.socialhub.models.Message;
 import com.pixelperfect.socialhub.models.Network;
-import com.pixelperfect.socialhub.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Objects;
-import java.util.UUID;
 
 public class NetworkActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
+
     public String networkID;
     public String networkKey;
     public Network network;
+    public FirebaseUser currentUser;
+    public DatabaseReference referenceCurrentNetwork;
 
-    FirebaseUser firebaseUser;
     DatabaseReference referenceUser;
     DatabaseReference referenceNetworks;
+
+//    ImageButton btn_send;
+//    EditText text_send;
+//    Message message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network);
+
+//        btn_send = findViewById(R.id.btn_send);
+//        text_send = findViewById(R.id.text_send);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -75,8 +81,8 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Network");
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        referenceUser = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        referenceUser = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
         referenceNetworks = FirebaseDatabase.getInstance().getReference("Networks");
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -94,9 +100,13 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+
                     networkKey = childSnapshot.getKey();
+                    assert networkKey != null;
+                    referenceCurrentNetwork = referenceNetworks.child(networkKey);
+
                     network = childSnapshot.getValue(Network.class);
-                    getSupportActionBar().setTitle(network.getName());
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(network.getName());
                 }
             }
 
@@ -105,12 +115,31 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+
+
+//        btn_send.setOnClickListener(this);
     }
+
+//    private void sendMessage(Message message) {
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("idSender", message.getIdSender());
+//        hashMap.put("date", message.getDate());
+//        hashMap.put("content", message.getContent());
+//        hashMap.put("type", message.getType());
+//        referenceCurrentNetwork.child("messages").push().setValue(hashMap);
+//    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case :
+//            case R.id.btn_send:
+//                if (!text_send.getText().toString().equals("")) {
+//                    message = new Message(currentUser.getUid(), new Date(), text_send.getText().toString(), "text");
+//                    sendMessage(message);
+//                } else {
+//                    Toast.makeText(NetworkActivity.this, "You can't send a empty message !", Toast.LENGTH_SHORT).show();
+//                }
+//                text_send.setText("");
 //                break;
         }
     }

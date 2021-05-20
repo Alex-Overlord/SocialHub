@@ -3,12 +3,12 @@ package com.pixelperfect.socialhub.models;
 import java.util.Date;
 
 public class Message {
-    private String idSender, content, type;
-    private Date date;
+    private String idSender, date, content, type;
 
     public Message() {}
-    public Message(String idSender, Date date, String content, String type) {
+    public Message(String idSender, String date, String content, String type) {
         this.idSender = idSender;
+        this.date = date;
         this.content = content;
         this.type = type;
     }
@@ -19,10 +19,10 @@ public class Message {
     public void setIdSender(String idSender) {
         this.idSender = idSender;
     }
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     public String getContent() {
