@@ -1,7 +1,9 @@
 package com.pixelperfect.socialhub.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -20,7 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pixelperfect.socialhub.R;
 import com.pixelperfect.socialhub.activities.NetworkActivity;
+import com.pixelperfect.socialhub.activities.NetworksListActivity;
 import com.pixelperfect.socialhub.adapters.UserAdapter;
+import com.pixelperfect.socialhub.listeners.RecyclerItemClickListener;
 import com.pixelperfect.socialhub.models.Network;
 import com.pixelperfect.socialhub.models.User;
 
@@ -38,6 +42,7 @@ public class UsersFragment extends Fragment {
     public NetworkActivity networkActivity;
     private Network network;
     private String networkKey;
+    public ArrayList<User> usersList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,8 +56,34 @@ public class UsersFragment extends Fragment {
         assert networkActivity != null;
         networkKey = networkActivity.networkKey;
         network = networkActivity.network;
-
+        usersList = new ArrayList<User>();
         readUsers();
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(),recyclerView, new RecyclerItemClickListener.OnItemClickListener(){
+
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        //view.setBackgroundColor(Color.parseColor("FF0000"));
+                        int itemPosition = recyclerView.getChildLayoutPosition(view);
+                        User item = usersList.get(itemPosition);
+                        Toast.makeText(getContext(), String.valueOf(itemPosition), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        DatabaseReference referenceNetworks = FirebaseDatabase.getInstance().getReference("Networks");
+                        DatabaseReference referenceUsersNetwork = referenceNetworks.child(networkKey).child("users");
+                        int itemPosition = recyclerView.getChildLayoutPosition(view);
+                        User item = usersList.get(itemPosition);
+                        String str = referenceUsersNetwork.child(item.getId().toString()).getKey();
+                        referenceUsersNetwork.child(item.getId().toString()).removeValue();
+                        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+                        network.suppMember(item);
+
+                    }
+                })
+        );
 
         return view;
     }
@@ -77,6 +108,7 @@ public class UsersFragment extends Fragment {
                 }
 
                 userAdapter = new UserAdapter(getContext(), new ArrayList(network.getUsers().values()));
+                usersList = new ArrayList(network.getUsers().values());
                 recyclerView.setAdapter(userAdapter);
             }
 

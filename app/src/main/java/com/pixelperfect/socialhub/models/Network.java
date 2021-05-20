@@ -70,4 +70,5 @@ public class Network {
     public boolean isMember(User user){
         return this.users.containsKey(user.getId());
     }
+    public void suppMember(User user){ users.remove(user.getId());}
 }
