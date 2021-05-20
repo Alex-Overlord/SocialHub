@@ -9,7 +9,7 @@ public class Network {
     private String id, name, description;
     private Map<String, User> users;
     private Map<String, User> admins;
-    private ArrayList<Message> messages;
+    private Map<String, Message> messages;
 
     // Constructors
     public Network() {}
@@ -19,7 +19,7 @@ public class Network {
         this.description = description;
         this.users = new HashMap<>();
         this.admins = new HashMap<>();
-        this.messages = new ArrayList<>();
+        this.messages = new HashMap<>();
     }
 
     // Getters and Setters
@@ -41,22 +41,22 @@ public class Network {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Map<String,User> getUsers() {
+    public Map<String, User> getUsers() {
         return users;
     }
-    public void setUsers(Map<String,User> users) {
+    public void setUsers(Map<String, User> users) {
         this.users = users;
     }
-    public Map<String,User> getAdmins() {
+    public Map<String, User> getAdmins() {
         return admins;
     }
-    public void setAdmins(Map<String,User> admins) {
+    public void setAdmins(Map<String, User> admins) {
         this.admins = admins;
     }
-    public ArrayList<Message> getMessages() {
+    public Map<String, Message> getMessages() {
         return messages;
     }
-    public void setMessages(ArrayList<Message> messages) {
+    public void setMessages(Map<String, Message> messages) {
         this.messages = messages;
     }
 

@@ -1,40 +1,35 @@
 package com.pixelperfect.socialhub.models;
 
+import java.util.Date;
+
 public class Message {
-    private String id, idSender, date, text, type;
+    private String idSender, content, type;
+    private Date date;
 
     public Message() {}
-    public Message(String id, String idSender, String date, String text, String type) {
-        this.id = id;
+    public Message(String idSender, Date date, String content, String type) {
         this.idSender = idSender;
-        this.date = date;
-        this.text = text;
+        this.content = content;
         this.type = type;
     }
 
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
     public String getIdSender() {
         return idSender;
     }
     public void setIdSender(String idSender) {
         this.idSender = idSender;
     }
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String text) {
+        this.content = text;
     }
     public String getType() {
         return type;
