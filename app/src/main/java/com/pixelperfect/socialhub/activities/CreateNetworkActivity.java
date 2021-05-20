@@ -33,8 +33,6 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
     private FirebaseUser user;
     private DatabaseReference referenceUsers, referenceNetworks;
 
-//    private String saveCurrentDate, saveCurrentTime, randomName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +86,6 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             logout();
             return true;
@@ -135,41 +132,6 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         network.addAdmin(user.getUid(), insertedUser);
         referenceNetworks.push().setValue(network);
         network.setId(referenceNetworks.getKey());
-
-        /*
-        mGetReference.addValueEventListener (new ValueEventListener () {
-          @Override public void onDataChange (@NonNull DataSnapshot dataSnapshot) {
-              if (dataSnapshot.exists ()) {
-                  HashMap <String, Object> data );
-                  pour (clé de chaîne: dataMap.keySet ()) {
-                      objet Data = dataMap.get (clé);
-                      try {
-                          HashMap <String, Object> userData = (HashMap <String, Object>) data;
-                          utilisateur mUser = nouvel utilisateur ( (Chaîne) userData.get ("nom"), (int) (long) userData.get ("âge"));
-                          addTextToView (mUser.getName () + "-" + Integer.toString (mUser.getAge ()) );
-                       } catch (ClassCastException cce) {
-                          // Si l'objet ne peut pas être transtypé en HashMap, cela signifie qu'il est de type String.
-                          try {String mString = String.valueOf (dataMap.get (clé));
-                          addTextToView ( mString);
-                       } catch (ClassCastException cce2) {}
-                    }
-                 }
-              }
-           }
-           @Override public void onCancelled (@NonNull DatabaseError databaseError) {}
-        });
-
-         */
-
-//        Calendar calDate = Calendar.getInstance();
-//        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
-//        saveCurrentDate = currentDate.format(calDate.getTime());
-//
-//        Calendar calTime = Calendar.getInstance();
-//        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-//        saveCurrentTime = currentTime.format(calTime.getTime());
-//
-//        randomName = saveCurrentDate + saveCurrentTime;
 
         progressBar.setVisibility(View.GONE);
     }

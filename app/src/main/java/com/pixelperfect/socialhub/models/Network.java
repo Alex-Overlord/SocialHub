@@ -9,6 +9,7 @@ public class Network {
     private String id, name, description;
     private Map<String, User> users;
     private Map<String, User> admins;
+    private ArrayList<Message> messages;
 
     // Constructors
     public Network() {}
@@ -18,6 +19,7 @@ public class Network {
         this.description = description;
         this.users = new HashMap<>();
         this.admins = new HashMap<>();
+        this.messages = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -51,6 +53,12 @@ public class Network {
     public void setAdmins(Map<String,User> admins) {
         this.admins = admins;
     }
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
 
     // Others methods
     public void addUser(String key, User user) {
@@ -59,7 +67,7 @@ public class Network {
     public void addAdmin(String key, User user) {
         admins.put(key, user);
     }
-    public boolean estMembre(User user){
+    public boolean isMember(User user){
         return this.users.containsKey(user.getId());
     }
 }

@@ -33,7 +33,6 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         banner = findViewById(R.id.banner);
@@ -97,17 +96,6 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         }
 
         progressBar.setVisibility(View.VISIBLE);
-
-//        mAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-//                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest
-//                                .Builder()
-//                                .setDisplayName(fullName).build();
-//                        firebaseUser.updateProfile(profileChangeRequest);
-//                    }
-//                });
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {

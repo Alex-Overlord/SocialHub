@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pixelperfect.socialhub.R;
-import com.pixelperfect.socialhub.RecyclerItemClickListener;
+import com.pixelperfect.socialhub.listeners.RecyclerItemClickListener;
 import com.pixelperfect.socialhub.adapters.NetworkAdapter;
 import com.pixelperfect.socialhub.models.Network;
 import com.pixelperfect.socialhub.models.User;
@@ -42,7 +42,6 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView recyclerView;
     private ArrayList<Network> networks;
     private NetworkAdapter networkAdapter;
-    private String selectedNetworkID;
     private String keyNet;
 
     @Override
@@ -63,12 +62,10 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        // do whatever
 
                         int itemPosition = recyclerView.getChildLayoutPosition(view);
                         Network item = networks.get(itemPosition);
 
-//                        Toast.makeText(NetworksListActivity.this, "onItemClick " + item.getId(), Toast.LENGTH_SHORT).show();
                         DatabaseReference refNetworks = FirebaseDatabase.getInstance().getReference().child("Networks");
 
                         refNetworks.orderByChild("id").equalTo(item.getId()).addValueEventListener(new ValueEventListener() {
@@ -77,29 +74,24 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
                                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
                                     keyNet = childSnapshot.getKey();
                                     DatabaseReference refUsersNetwork = getInstance().getReference().child("Networks").child(keyNet).child("users");
-                                    //test s'il peut aller directement dans le reseau public
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                                     assert user != null;
                                     User insertedUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
-//                        item.addUser(user.getUid(), insertedUser);
 
                                     String keyId = refNetworks.push().getKey();
 
                                     assert keyId != null;
                                     assert keyNet != null;
                                     refUsersNetwork.child(user.getUid()).setValue(insertedUser);
-//                                    refUsersNetwork.setValue(insertedUser);
 
-                                    if (item.estMembre(insertedUser)) {
+                                    if (item.isMember(insertedUser)) {
                                         startActivity(new Intent(NetworksListActivity.this, NetworkActivity.class)
                                                 .putExtra("NETWORK_ID", item.getId()));
                                     } else {
                                         Toast.makeText(NetworksListActivity.this, "Tu dois etre inscrit pour y allée", Toast.LENGTH_LONG).show();
 
                                     }
-//                                    network = childSnapshot.getValue(Network.class);
-//                                    getSupportActionBar().setTitle(network.getName());
                                 }
                             }
 
@@ -112,7 +104,6 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
                         Toast.makeText(NetworksListActivity.this,"selectionner le reseau ?", Toast.LENGTH_LONG).show();
                     }
                 })
@@ -137,21 +128,6 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(NetworksListActivity.this, "cancelled", Toast.LENGTH_SHORT).show();
             }
         });
-
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    selectedNetworkID = dataSnapshot.getKey();
-//                    Toast.makeText(NetworksListActivity.this, "selectedNetworkID : " + selectedNetworkID, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
     }
 
     @Override
@@ -165,19 +141,14 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             logout();
             return true;

@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pixelperfect.socialhub.R;
+import com.pixelperfect.socialhub.activities.NetworkActivity;
 
 public class ChatsFragment extends Fragment {
-    
+
+    public NetworkActivity networkActivity;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }
 }

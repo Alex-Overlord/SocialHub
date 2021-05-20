@@ -3,13 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".fragments.ChatsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/fragment_chats_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Chats" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="5dp"
+        android:layout_gravity="bottom">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+<!--        <ImageButton-->
+
+    </RelativeLayout>
 
 </FrameLayout>

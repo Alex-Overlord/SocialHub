@@ -79,21 +79,6 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
         referenceUser = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         referenceNetworks = FirebaseDatabase.getInstance().getReference("Networks");
 
-        referenceUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
-//                User user = snapshot.getValue(User.class);
-//                network.addUser(user);
-//                Toast.makeText(NetworkActivity.this, "addUser : "+user , Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
-
-            }
-        });
-
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
 
@@ -112,8 +97,6 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
                     networkKey = childSnapshot.getKey();
                     network = childSnapshot.getValue(Network.class);
                     getSupportActionBar().setTitle(network.getName());
-//                    copyRecord(referenceUser, referenceNetworks.child(networkKey).child("users"));
-//                    Toast.makeText(NetworkActivity.this, "name : " + network.getName(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -123,20 +106,6 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
-
-//    private void copyRecord(DatabaseReference fromPath, final DatabaseReference toPath) {
-//        fromPath.addListenerForSingleValueEvent(new ValueEventListener()  {
-//            private static final String TAG = "TAG";
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                toPath.setValue(dataSnapshot.getValue().toString()).addOnCompleteListener(task -> Log.d(TAG, "Success!"));
-//                Toast.makeText(NetworkActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {}
-//        });
-//    }
 
     @Override
     public void onClick(View v) {
@@ -148,16 +117,12 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (id == R.id.action_logout) {
