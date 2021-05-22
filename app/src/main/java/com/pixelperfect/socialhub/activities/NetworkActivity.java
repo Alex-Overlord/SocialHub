@@ -48,6 +48,7 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
     public Network network;
     public FirebaseUser currentUser;
     public DatabaseReference referenceCurrentNetwork;
+    public DatabaseReference referenceCurrentNetworkMessages;
 
     DatabaseReference referenceUser;
     DatabaseReference referenceNetworks;
@@ -104,6 +105,7 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
                     networkKey = childSnapshot.getKey();
                     assert networkKey != null;
                     referenceCurrentNetwork = referenceNetworks.child(networkKey);
+                    referenceCurrentNetworkMessages = referenceCurrentNetwork.child("messages");
 
                     network = childSnapshot.getValue(Network.class);
                     Objects.requireNonNull(getSupportActionBar()).setTitle(network.getName());

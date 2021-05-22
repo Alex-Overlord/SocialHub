@@ -56,7 +56,7 @@ public class UsersFragment extends Fragment {
         readUsers();
 
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(),recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(View view, int position) {
@@ -70,7 +70,7 @@ public class UsersFragment extends Fragment {
                         DatabaseReference referenceUsersNetwork = referenceNetworks.child(networkKey).child("users");
 
                         int itemPosition = recyclerView.getChildLayoutPosition(view);
-                        User item = (User) usersList.get(itemPosition);
+                        User item = usersList.get(itemPosition);
 
                         String str = referenceUsersNetwork.child(item.getId()).getKey();
                         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
