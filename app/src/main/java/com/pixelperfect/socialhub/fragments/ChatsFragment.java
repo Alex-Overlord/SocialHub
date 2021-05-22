@@ -59,6 +59,7 @@ public class ChatsFragment extends Fragment implements View.OnClickListener {
         text_send = root.findViewById(R.id.text_send);
         btn_send = root.findViewById(R.id.btn_send);
         btn_send.setOnClickListener(this);
+//        readMessages();
 
         networkActivity.referenceCurrentNetwork.addValueEventListener(new ValueEventListener() {
             @Override

@@ -177,10 +177,10 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String> titles;
+        private final ArrayList<Fragment> fragments;
+        private final ArrayList<String> titles;
 
         ViewPagerAdapter(FragmentManager fm) {
             super(fm);
