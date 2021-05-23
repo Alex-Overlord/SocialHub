@@ -1,8 +1,10 @@
 package com.pixelperfect.socialhub.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,11 +28,19 @@ import com.pixelperfect.socialhub.models.Message;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ChatsFragment extends Fragment implements View.OnClickListener {
 
@@ -59,7 +69,6 @@ public class ChatsFragment extends Fragment implements View.OnClickListener {
         text_send = root.findViewById(R.id.text_send);
         btn_send = root.findViewById(R.id.btn_send);
         btn_send.setOnClickListener(this);
-//        readMessages();
 
         networkActivity.referenceCurrentNetwork.addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,12 +85,16 @@ public class ChatsFragment extends Fragment implements View.OnClickListener {
         return root;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:
                 if (!text_send.getText().toString().equals("")) {
-                    message = new Message(networkActivity.currentUser.getUid(), Calendar.getInstance().getTime().toString(), text_send.getText().toString(), "text");
+                    LocalDateTime now = LocalDateTime.now().plusHours(2);
+                    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
+                    String formatDateTime = now.format(format);
+                    message = new Message(networkActivity.currentUser.getUid(), networkActivity.currentUser.getDisplayName(), formatDateTime, text_send.getText().toString(), "text");
                     sendMessage(message);
                 } else {
                     Toast.makeText(getContext(), "You can't send a empty message !", Toast.LENGTH_SHORT).show();
@@ -94,6 +107,7 @@ public class ChatsFragment extends Fragment implements View.OnClickListener {
     private void sendMessage(Message message) {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("idSender", message.getIdSender());
+        hashMap.put("username", message.getUsername());
         hashMap.put("date", message.getDate());
         hashMap.put("content", message.getContent());
         hashMap.put("type", message.getType());
