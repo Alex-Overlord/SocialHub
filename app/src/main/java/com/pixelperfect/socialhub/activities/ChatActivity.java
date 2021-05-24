@@ -14,9 +14,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,19 +24,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pixelperfect.socialhub.R;
-import com.pixelperfect.socialhub.fragments.ChatsFragment;
+import com.pixelperfect.socialhub.fragments.ChatFragment;
 import com.pixelperfect.socialhub.fragments.UsersFragment;
-import com.pixelperfect.socialhub.models.Message;
 import com.pixelperfect.socialhub.models.Network;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Objects;
 
-public class NetworkActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
 
@@ -53,17 +47,10 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
     DatabaseReference referenceUser;
     DatabaseReference referenceNetworks;
 
-//    ImageButton btn_send;
-//    EditText text_send;
-//    Message message;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network);
-
-//        btn_send = findViewById(R.id.btn_send);
-//        text_send = findViewById(R.id.text_send);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -91,7 +78,7 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
+        viewPagerAdapter.addFragment(new ChatFragment(), "Chat");
         viewPagerAdapter.addFragment(new UsersFragment(), "Users");
 
         viewPager.setAdapter(viewPagerAdapter);
@@ -117,32 +104,12 @@ public class NetworkActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-
-
-//        btn_send.setOnClickListener(this);
     }
-
-//    private void sendMessage(Message message) {
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("idSender", message.getIdSender());
-//        hashMap.put("date", message.getDate());
-//        hashMap.put("content", message.getContent());
-//        hashMap.put("type", message.getType());
-//        referenceCurrentNetwork.child("messages").push().setValue(hashMap);
-//    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.btn_send:
-//                if (!text_send.getText().toString().equals("")) {
-//                    message = new Message(currentUser.getUid(), new Date(), text_send.getText().toString(), "text");
-//                    sendMessage(message);
-//                } else {
-//                    Toast.makeText(NetworkActivity.this, "You can't send a empty message !", Toast.LENGTH_SHORT).show();
-//                }
-//                text_send.setText("");
-//                break;
+
         }
     }
 

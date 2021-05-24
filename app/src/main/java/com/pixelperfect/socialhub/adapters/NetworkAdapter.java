@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pixelperfect.socialhub.R;
@@ -38,7 +39,14 @@ public class NetworkAdapter extends RecyclerView.Adapter<NetworkAdapter.ViewHold
         Network network = mNetwork.get(position);
         holder.name.setText(network.getName());
         holder.description.setText(network.getDescription());
-
+        holder.type.setText(network.getType());
+        if (holder.type.getText().equals("Chat")) {
+            holder.type.setTextColor(ContextCompat.getColor(mContext, R.color.secondary));
+        } else if (holder.type.getText().equals("Posts")) {
+            holder.type.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
+        } else {
+            holder.type.setTextColor(ContextCompat.getColor(mContext, R.color.purple_200));
+        }
     }
 
     @Override
@@ -49,12 +57,14 @@ public class NetworkAdapter extends RecyclerView.Adapter<NetworkAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public TextView description;
+        public TextView type;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.network_name);
             description = itemView.findViewById(R.id.network_description);
+            type = itemView.findViewById(R.id.network_type);
         }
     }
 }

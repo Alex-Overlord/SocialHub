@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pixelperfect.socialhub">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialHub">
+        <activity android:name=".activities.PostsActivity"></activity>
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +35,7 @@
             android:name=".activities.CreateNetworkActivity"
             android:parentActivityName=".activities.NetworksListActivity" />
         <activity
-            android:name=".activities.NetworkActivity"
+            android:name=".activities.ChatActivity"
             android:parentActivityName=".activities.NetworksListActivity" />
     </application>
 

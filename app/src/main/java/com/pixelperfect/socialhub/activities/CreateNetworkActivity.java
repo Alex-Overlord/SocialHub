@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,12 +26,14 @@ import com.pixelperfect.socialhub.models.User;
 import java.util.Objects;
 import java.util.UUID;
 
-public class CreateNetworkActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateNetworkActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Toolbar toolbar;
     private EditText editTextName, editTextDescription;
     private Button validateNetwork;
     private ProgressBar progressBar;
+    private Spinner spinner;
+    private String type;
 
     private FirebaseUser user;
     private DatabaseReference referenceUsers, referenceNetworks;
@@ -60,6 +65,12 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         editTextDescription.setText("Un super réseau où parler avec ces amis");
 
         progressBar = findViewById(R.id.progressBar);
+
+        spinner = findViewById(R.id.network_types_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.network_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -125,7 +136,7 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Network network = new Network(UUID.randomUUID().toString(), name, description);
+        Network network = new Network(UUID.randomUUID().toString(), name, description, type);
         User insertedUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
 
         network.addUser(user.getUid(), insertedUser);
@@ -134,5 +145,15 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         network.setId(referenceNetworks.getKey());
 
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        type = (String) parent.getItemAtPosition(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

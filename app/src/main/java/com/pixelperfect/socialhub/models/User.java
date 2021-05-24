@@ -1,8 +1,12 @@
 package com.pixelperfect.socialhub.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
 
     private String id, fullName, email;
+    private Map<String, Network> networks;
 
     // Constructors
     public User() {}
@@ -10,6 +14,7 @@ public class User {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
+        this.networks = new HashMap<>();
     }
 
     // Getters and Setters
@@ -30,5 +35,11 @@ public class User {
     }
     public void setId(String id) {
         this.id = id;
+    }
+    public Map<String, Network> getNetworks() {
+        return networks;
+    }
+    public void setNetworks(Map<String, Network> networks) {
+        this.networks = networks;
     }
 }

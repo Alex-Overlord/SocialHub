@@ -12,9 +12,10 @@
 
     <TextView
         android:id="@+id/networkAdvice"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
         android:ems="10"
         android:text="@string/networkAdviceText"
         android:textSize="24sp"
@@ -25,9 +26,10 @@
 
     <EditText
         android:id="@+id/networkName"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="10dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="text"
@@ -38,22 +40,33 @@
 
     <EditText
         android:id="@+id/networkDescription"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="10dp"
         android:ems="10"
         android:hint="Description"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/networkName" />
 
+    <Spinner
+        android:id="@+id/network_types_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="@+id/networkDescription"
+        app:layout_constraintTop_toBottomOf="@+id/networkDescription" />
+
     <Button
         android:id="@+id/validateNetwork"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="10dp"
         android:backgroundTint="@color/primary"
         android:text="Validate"
         android:textColor="@color/white"

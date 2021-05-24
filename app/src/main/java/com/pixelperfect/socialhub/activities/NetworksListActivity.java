@@ -42,7 +42,7 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView recyclerView;
     private ArrayList<Network> networks;
     private NetworkAdapter networkAdapter;
-    private String keyNet;
+//    private String keyNet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,9 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
         recyclerView = findViewById(R.id.networksList_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
 
                         int itemPosition = recyclerView.getChildLayoutPosition(view);
                         Network item = networks.get(itemPosition);
@@ -71,22 +72,25 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
                         refNetworks.orderByChild("id").equalTo(item.getId()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-                                    keyNet = childSnapshot.getKey();
-                                    DatabaseReference refUsersNetwork = getInstance().getReference().child("Networks").child(keyNet).child("users");
+                                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+//                                    keyNet = childSnapshot.getKey();
+                                    DatabaseReference refUsersNetwork = getInstance().getReference().child("Networks").child(Objects.requireNonNull(childSnapshot.getKey())).child("users");
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                                     assert user != null;
                                     User insertedUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
 
-                                    String keyId = refNetworks.push().getKey();
+//                                    String keyId = refNetworks.push().getKey();
 
-                                    assert keyId != null;
-                                    assert keyNet != null;
+//                                    assert keyId != null;
+//                                    assert keyNet != null;
                                     refUsersNetwork.child(user.getUid()).setValue(insertedUser);
 
-                                    if (item.isMember(insertedUser)) {
-                                        startActivity(new Intent(NetworksListActivity.this, NetworkActivity.class)
+                                    if (item.isMember(insertedUser) && item.getType().equals("Chat")) {
+                                        startActivity(new Intent(NetworksListActivity.this, ChatActivity.class)
+                                                .putExtra("NETWORK_ID", item.getId()));
+                                    } else if (item.isMember(insertedUser) && item.getType().equals("Posts")) {
+                                        startActivity(new Intent(NetworksListActivity.this, PostsActivity.class)
                                                 .putExtra("NETWORK_ID", item.getId()));
                                     } else {
                                         Toast.makeText(NetworksListActivity.this, "Tu dois etre inscrit pour y allée", Toast.LENGTH_LONG).show();
@@ -103,8 +107,9 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        Toast.makeText(NetworksListActivity.this,"selectionner le reseau ?", Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Toast.makeText(NetworksListActivity.this, "selectionner le reseau ?", Toast.LENGTH_LONG).show();
                     }
                 })
         );

@@ -11,8 +11,6 @@
     <string name="networks_title">Networks</string>
     <string name="action_logout">Logout</string>
     <string name="CreateNetworkText">Create Network</string>
-    <string name="networkAdviceText">Enter a name and description that describes the topic of the network (its geographic area, topic, center of interest, etc.)</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="message_hint">Write in the chat...</string>
+    <string name="networkAdviceText">Enter a name, description that describes the topic of the network (its geographic area, topic, center of interest, etc.) and this type.</string>
+    <string name="message_hint">Write in the chat…</string>
 </resources>
