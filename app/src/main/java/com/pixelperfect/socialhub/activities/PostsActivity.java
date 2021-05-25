@@ -44,6 +44,7 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
     public FirebaseUser currentUser;
     public DatabaseReference referenceCurrentNetwork;
     public DatabaseReference referenceCurrentNetworkMessages;
+    public DatabaseReference referenceCurrentNetworkPosts;
 
     DatabaseReference referenceUser;
     DatabaseReference referenceNetworks;
@@ -94,6 +95,7 @@ public class PostsActivity extends AppCompatActivity implements View.OnClickList
                     assert networkKey != null;
                     referenceCurrentNetwork = referenceNetworks.child(networkKey);
                     referenceCurrentNetworkMessages = referenceCurrentNetwork.child("messages");
+                    referenceCurrentNetworkPosts = referenceCurrentNetwork.child("posts");
 
                     network = childSnapshot.getValue(Network.class);
                     Objects.requireNonNull(getSupportActionBar()).setTitle(network.getName());

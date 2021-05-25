@@ -115,4 +115,5 @@ public class ChatFragment extends Fragment implements View.OnClickListener {
             });
         }
     }
+
 }
