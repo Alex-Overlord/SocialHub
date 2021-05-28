@@ -81,8 +81,8 @@ public class UsersFragment extends Fragment {
                         String str = referenceUsersNetwork.child(item.getId()).getKey();
                         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
 
-//                        referenceUsersNetwork.child(item.getId()).removeValue();
-//                        network.suppMember(item);
+                        referenceUsersNetwork.child(item.getId()).removeValue();
+                        network.suppMember(item);
                     }
                 })
         );

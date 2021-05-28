@@ -1,7 +1,6 @@
 package com.pixelperfect.socialhub.fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -51,8 +50,6 @@ import java.util.UUID;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static android.app.Activity.RESULT_OK;
 
 public class PostsFragment extends Fragment implements View.OnClickListener {
 

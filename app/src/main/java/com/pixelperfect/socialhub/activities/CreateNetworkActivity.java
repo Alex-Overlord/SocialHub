@@ -61,8 +61,8 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
         referenceNetworks = FirebaseDatabase.getInstance().getReference("Networks");
 
         // à enlever pour le rendu !!
-        editTextName.setText("Mon réseau");
-        editTextDescription.setText("Un super réseau où parler avec ces amis");
+//        editTextName.setText("Mon réseau");
+//        editTextDescription.setText("Un super réseau où parler avec ces amis");
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -85,16 +85,12 @@ public class CreateNetworkActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (id == R.id.action_logout) {

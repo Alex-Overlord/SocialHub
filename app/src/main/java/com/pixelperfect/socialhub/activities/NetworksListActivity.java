@@ -42,7 +42,6 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView recyclerView;
     private ArrayList<Network> networks;
     private NetworkAdapter networkAdapter;
-//    private String keyNet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +79,6 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
                                     assert user != null;
                                     User insertedUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
 
-//                                    String keyId = refNetworks.push().getKey();
-
-//                                    assert keyId != null;
-//                                    assert keyNet != null;
                                     refUsersNetwork.child(user.getUid()).setValue(insertedUser);
 
                                     if (item.isMember(insertedUser) && item.getType().equals("Chat")) {

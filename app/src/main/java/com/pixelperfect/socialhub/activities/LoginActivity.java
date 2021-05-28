@@ -40,8 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = findViewById(R.id.password);
 
         // à enlever pour le rendu !!
-        editTextEmail.setText("usertest2353@gmail.com");
-        editTextPassword.setText("23532353");
+//        editTextEmail.setText("usertest2353@gmail.com");
+//        editTextPassword.setText("23532353");
 
         progressBar = findViewById(R.id.progressBar);
 
