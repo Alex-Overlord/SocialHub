@@ -72,7 +72,6 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
                             @Override
                             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                                 for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-//                                    keyNet = childSnapshot.getKey();
                                     DatabaseReference refUsersNetwork = getInstance().getReference().child("Networks").child(Objects.requireNonNull(childSnapshot.getKey())).child("users");
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -81,15 +80,12 @@ public class NetworksListActivity extends AppCompatActivity implements View.OnCl
 
                                     refUsersNetwork.child(user.getUid()).setValue(insertedUser);
 
-                                    if (item.isMember(insertedUser) && item.getType().equals("Chat")) {
+                                    if (item.getType().equals("Chat")) {
                                         startActivity(new Intent(NetworksListActivity.this, ChatActivity.class)
                                                 .putExtra("NETWORK_ID", item.getId()));
                                     } else if (item.isMember(insertedUser) && item.getType().equals("Posts")) {
                                         startActivity(new Intent(NetworksListActivity.this, PostsActivity.class)
                                                 .putExtra("NETWORK_ID", item.getId()));
-                                    } else {
-                                        Toast.makeText(NetworksListActivity.this, "Tu dois etre inscrit pour y allée", Toast.LENGTH_LONG).show();
-
                                     }
                                 }
                             }
